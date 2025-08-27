@@ -1,0 +1,40 @@
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
+import Sidebar from "./Components/Sidebar.jsx";
+import Chatbox from "./Components/Chatbox.jsx";
+import Credits from "./Pages/Credits.jsx";
+import Community from "./Pages/Community.jsx";
+import { useState } from "react";
+import { assets } from "./assets/assets.js";
+
+function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  return (
+    <>
+      {/* Mobile hamburger (only show if sidebar is closed) */}
+      {!isMenuOpen && (
+        <img
+          src={assets.menu_icon}
+          alt="menu"
+          className="absolute top-3 left-3 w-8 h-8 cursor-pointer md:hidden not-dark:invert z-30"
+          onClick={() => setIsMenuOpen(true)}
+        />
+      )}
+
+      <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
+        <div className="flex h-screen w-screen overflow-hidden">
+          <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+
+          <Routes>
+            <Route path="/" element={<Chatbox />} />
+            <Route path="/credits" element={<Credits />} />
+            <Route path="/community" element={<Community />} />
+          </Routes>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default App;
